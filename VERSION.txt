@@ -1,0 +1,1 @@
+1.0 --> Funcionamiento estable, se le añadieron listeners para la comunicacion con arduino y para designar las tareas que realizara el servidor.
