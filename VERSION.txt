@@ -1,0 +1,4 @@
+1.0 --> Funcionamiento estable, se le añadieron listeners para la comunicacion con arduino y para designar las tareas que realizara el 
+servidor.
+1.1 --> Funcionamiento estable, se añadieron interfaces para mejorar el entendimiento del codigo, ademas de unos cambios de estructura.
+	Se añadio el metodo isConnected() en la clase ArduinoConnector
