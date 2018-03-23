@@ -8,8 +8,6 @@ package org.iotServer.net;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.InetAddress;
-import java.net.MulticastSocket;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -25,26 +23,35 @@ public class Server extends Thread{
     private final ArduinoConnector arduConnector;
     private ClientListener listener;
     
+    private static final short DEFAULT_PORT = 4000;
+    private static final int DEFAULT_BUFF_SIZE = 4000;
+    
     public Server(int port) throws SocketException {
         dataSock = new DatagramSocket(port);
-        receivPacket = new DatagramPacket(new byte[64], 64);
+        receivPacket = new DatagramPacket(new byte[DEFAULT_BUFF_SIZE], DEFAULT_BUFF_SIZE);
         arduConnector = new ArduinoConnector();
-        arduConnector.setArduinoListener((String string) -> {});
+        arduConnector.addArduinoListener((String string) -> {});
         listener = null;
     }
     
      public Server(int port, String arduSerialPort) throws SocketException {
         dataSock = new DatagramSocket(port);
-        receivPacket = new DatagramPacket(new byte[64], 64);
+        receivPacket = new DatagramPacket(new byte[DEFAULT_BUFF_SIZE], DEFAULT_BUFF_SIZE);
         arduConnector = new ArduinoConnector(arduSerialPort);
-        arduConnector.setArduinoListener((String string) -> {});
+        arduConnector.addArduinoListener((String string) -> {});
         listener = null;
     }
     
     public Server() throws SocketException{
-        this(4000);
+        this(DEFAULT_PORT);
     }
 
+    /**
+     * The listener of the server is replaced (which allows to execute 
+     * the operations that you deem convenient).
+     * @param listener Listener that contains the new actions to execute in an infinite loop, 
+     * if you want to remove the loop you must edit the source code.
+     */
     public void setListener(ClientListener listener) {
         this.listener = listener;
     }
@@ -90,7 +97,6 @@ public class Server extends Thread{
             }
         });
         server.start();
-        
     }
     
 }

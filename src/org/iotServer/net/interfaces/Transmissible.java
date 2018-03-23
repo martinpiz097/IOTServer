@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.iotServer.net;
+package org.iotServer.net.interfaces;
 
-@FunctionalInterface
 /**
  *
  * @author martin
  */
-public interface ClientListener {
-    public void onClientConnected();
+public interface Transmissible {
+    public void send(String msg);
+    public void send(char data);
+    public void send(int data);
 }
